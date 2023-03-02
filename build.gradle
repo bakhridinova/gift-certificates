@@ -1,0 +1,89 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+allprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'war'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+        implementation 'org.slf4j:slf4j-api:2.0.6'
+
+        // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+        implementation 'org.slf4j:slf4j-simple:2.0.6'
+
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        compileOnly 'org.projectlombok:lombok:1.18.26'
+
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+        // https://mvnrepository.com/artifact/org.springframework/spring-core
+        implementation "org.springframework:spring-core:$springVersion"
+
+        // https://mvnrepository.com/artifact/org.springframework/spring-context
+        implementation "org.springframework:spring-context:$springVersion"
+
+        // https://mvnrepository.com/artifact/org.springframework/spring-web
+        implementation "org.springframework:spring-web:$springVersion"
+
+        // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
+        implementation "org.springframework:spring-webmvc:$springVersion"
+
+        // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
+        implementation "org.springframework:spring-jdbc:$springVersion"
+
+        // https://mvnrepository.com/artifact/org.springframework/spring-tx
+        implementation "org.springframework:spring-tx:$springVersion"
+
+        // https://mvnrepository.com/artifact/org.springframework/spring-test
+        testImplementation "org.springframework:spring-test:$springVersion"
+
+        // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
+        implementation "jakarta.servlet:jakarta.servlet-api:6.0.0"
+
+        // https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api
+        implementation "jakarta.validation:jakarta.validation-api:3.0.2"
+
+        // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
+        implementation "org.hibernate.validator:hibernate-validator:8.0.0.Final"
+
+        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+
+        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
+        testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
+        // https://mvnrepository.com/artifact/org.mockito/mockito-core
+        testImplementation "org.mockito:mockito-core:5.1.1"
+
+        // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
+        testImplementation 'org.mockito:mockito-junit-jupiter:2.17.0'
+
+        // https://mvnrepository.com/artifact/org.testcontainers/testcontainers
+        testImplementation 'org.testcontainers:testcontainers:1.17.6'
+
+        // https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter
+        testImplementation 'org.testcontainers:junit-jupiter:1.17.6'
+
+        // https://mvnrepository.com/artifact/org.testcontainers/postgresql
+        testImplementation 'org.testcontainers:postgresql:1.17.6'
+
+        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        testImplementation 'org.projectlombok:lombok:1.18.26'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
