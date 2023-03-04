@@ -22,42 +22,22 @@ import java.util.Set;
  */
 
 @UtilityClass
-public class ServiceTestEntityHolder {
-    // entity
-    public static final Tag tag;
-    public static final Certificate certificate;
-    public static final SortFilter sortFilter;
-    public static final SearchFilter searchFilter;
-
-    // entity dto
-    public static final TagDTO tagDTO;
-    public static final CertificateDTO certificateDTO;
-    public static final SortFilterDTO sortFilterDTO;
-    public static final SearchFilterDTO searchFilterDTO;
-
-    // null entity
-    public static final Tag nullTag;
-    public static final Certificate nullCertificate;
-    public static final SortFilter nullSortFilter;
-    public static final SearchFilter nullSearchFilter;
-
-    // null entity dto
-    public static final TagDTO nullTagDTO;
-    public static final CertificateDTO nullCertificateDTO;
-    public static final SortFilterDTO nullSortFilterDTO;
-    public static final SearchFilterDTO nullSearchFilterDTO;
-
+public class ServiceTestDataFactory {
     private static final LocalDateTime localDateTime = LocalDateTime.of(
             2020, 2, 20, 10, 10, 10);
 
-    static {
-        tag = Tag
+    // entity
+
+    public static Tag createTag() {
+        return Tag
                 .builder()
                 .id(0L)
                 .name("name")
                 .build();
+    }
 
-        certificate = Certificate
+    public static Certificate createCertificate() {
+        return Certificate
                 .builder()
                 .id(0L)
                 .name("name")
@@ -66,88 +46,121 @@ public class ServiceTestEntityHolder {
                 .duration(0)
                 .createDate(localDateTime)
                 .lastUpdateDate(localDateTime)
-                .tags(Set.of(tag))
+                .tags(Set.of(createTag()))
                 .build();
+    }
 
-        sortFilter = SortFilter
+    public static SortFilter createSortFilter() {
+        return SortFilter
                 .builder()
                 .sortType(SortType.NAME)
                 .sortOrder(SortOrder.ASC)
                 .build();
+    }
 
-        searchFilter = SearchFilter
+    public static SearchFilter createSearchFilter() {
+        return SearchFilter
                 .builder()
                 .searchValue("name")
                 .searchType(SearchType.NAME)
                 .searchPlace(SearchPlace.BEGINS_WITH)
                 .build();
+    }
 
 
+    // entity dto
 
-        tagDTO = TagDTO
+    public static TagDTO createTagDTO() {
+        return TagDTO
                 .builder()
                 .id(0L)
                 .name("name")
                 .build();
+    }
 
-        certificateDTO = CertificateDTO
+    public static CertificateDTO createCertificateDTO() {
+        return  CertificateDTO
                 .builder()
                 .id(0L)
                 .name("name")
                 .description("description")
                 .price("0.0")
                 .duration("0")
-                .createDate(localDateTime.toString())
-                .lastUpdateDate(localDateTime.toString())
-                .tags(new TagDTO[] {tagDTO})
+                .createDate(localDateTime)
+                .lastUpdateDate(localDateTime)
+                .tags(new TagDTO[] {createTagDTO()})
                 .build();
+    }
 
-        sortFilterDTO = SortFilterDTO
+    public static SortFilterDTO createSortFilterDTO() {
+        return SortFilterDTO
                 .builder()
                 .sortType(SortType.NAME.toString())
                 .sortOrder(SortOrder.ASC.toString())
                 .build();
+    }
 
-        searchFilterDTO = SearchFilterDTO
+    public static SearchFilterDTO createSearchFilterDTO() {
+        return SearchFilterDTO
                 .builder()
                 .searchValue("name")
                 .searchType(SearchType.NAME.toString())
                 .searchPlace(SearchPlace.BEGINS_WITH.toString())
                 .build();
+    }
 
 
+    // null entity
 
-        nullTag = Tag
+    public static Tag createNullTag() {
+        return Tag
+                .builder()
+                .build();
+    }
+
+    public static Certificate createNullCertificate() {
+        return Certificate
+                .builder()
+                .build();
+    }
+
+    public static SortFilter createNullSortFilter() {
+        return SortFilter
+                .builder()
+                .build();
+    }
+
+    public static SearchFilter createNullSearchFilter() {
+        return SearchFilter
+                .builder()
+                .build();
+    }
+
+
+    // null entity dto
+
+    public static TagDTO createNullTagDTO() {
+        return TagDTO
+                .builder()
+                .build();
+    }
+
+    public static CertificateDTO createNullCertificateDTO() {
+        return  CertificateDTO
                 .builder()
                 .build();
 
-        nullCertificate = Certificate
+    }
+
+    public static SortFilterDTO createNullSortFilterDTO() {
+        return SortFilterDTO
                 .builder()
                 .build();
 
-        nullSortFilter = SortFilter
-                .builder()
-                .build();
+    }
 
-        nullSearchFilter = SearchFilter
-                .builder()
-                .build();
-
-
-
-        nullTagDTO = TagDTO
-                .builder()
-                .build();
-
-        nullCertificateDTO = CertificateDTO
-                .builder()
-                .build();
-
-        nullSortFilterDTO = SortFilterDTO
-                .builder()
-                .build();
-
-        nullSearchFilterDTO = SearchFilterDTO
+    public static SearchFilterDTO createNullSearchFilterDTO() {
+        return SearchFilterDTO
                 .builder()
                 .build();
     }

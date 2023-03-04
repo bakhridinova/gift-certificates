@@ -9,8 +9,12 @@ import com.epam.esm.util.mapper.TagRowMapper;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -20,18 +24,31 @@ import java.sql.ResultSet;
  */
 
 @Configuration
+@Testcontainers
 public class RepositoryTestConfig {
+    @Container
+    private static PostgreSQLContainer<?> container;
+
+    @Bean
+    public PostgreSQLContainer<?> postgreSQLContainer() {
+        container = new PostgreSQLContainer<>("postgres:15");
+        container.withInitScript("data.sql");
+        container.start();
+        return container;
+    }
+
     /**
      * bean for interacting with test container
      *
-     * @return instance of DataSource for given data scripts
+     * @return instance of DataSource for given container properties
      */
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource(PostgreSQLContainer<?> container) {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl(System.getProperty("db.url"));
-        dataSource.setUsername(System.getProperty("db.username"));
-        dataSource.setPassword(System.getProperty("db.password"));
+        dataSource.setUrl(container.getJdbcUrl());
+        dataSource.setUsername(container.getUsername());
+        dataSource.setPassword(container.getPassword());
+        dataSource.setDriverClassName(container.getDriverClassName());
         return dataSource;
     }
 
@@ -90,6 +107,7 @@ public class RepositoryTestConfig {
      * @see com.epam.esm.repository.impl.TagRepositoryImplTest#tagRepository
      */
     @Bean
+    @Scope("prototype")
     public TagRepository tagRepository(JdbcTemplate jdbcTemplate,
                                        TagRowMapper tagRowMapper) {
         return new TagRepositoryImpl(

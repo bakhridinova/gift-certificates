@@ -1,4 +1,4 @@
-package com.epam.esm.util;
+package com.epam.esm.util.exception;
 
 /**
  * enum for exception messages

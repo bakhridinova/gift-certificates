@@ -32,7 +32,7 @@ public interface TagRepository extends BaseRepository<Tag> {
      * insertTags new tag
      *
      * @param tag Tag
-     * @return Long id if tag was inserted, otherwise null
+     * @return Long id of inserted tag
      */
     @Override
     Long insert(Tag tag);

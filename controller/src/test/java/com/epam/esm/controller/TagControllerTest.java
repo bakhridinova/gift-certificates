@@ -1,14 +1,15 @@
 package com.epam.esm.controller;
 
 import com.epam.esm.config.ControllerTestConfig;
+import com.epam.esm.dto.TagDTO;
 import com.epam.esm.exception.InvalidRequestBodyException;
 import com.epam.esm.exception.ModificationException;
 import com.epam.esm.exception.NotFoundException;
 import com.epam.esm.reponse.ResponseData;
 import com.epam.esm.service.TagService;
 import com.epam.esm.service.impl.TagServiceImpl;
+import com.epam.esm.util.ControllerTestDataFactory;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +22,6 @@ import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
-import static com.epam.esm.util.ControllerTestEntityHolder.tag;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -40,122 +40,121 @@ class TagControllerTest {
     @BeforeEach
     public void setUp() {
         tagService = mock(TagServiceImpl.class);
+        bindingResult = mock(BindingResult.class);
         tagController = new TagController(tagService);
     }
 
-    @Nested
-    class FindAllTest {
-        @Test
-        public void shouldThrowNotFoundExceptionIfTagsWereNotFoundTest()
-                throws NotFoundException {
-            doThrow(NotFoundException.class)
-                    .when(tagService)
-                            .findAll();
-            assertThrows(NotFoundException.class,
-                    () -> tagService.findAll());
-        }
-
-        @Test
-        public void shouldReturnResponseWithCorrectListIfNoExceptionWasThrownTest()
-                throws NotFoundException {
-            when(tagService.findAll())
-                    .thenReturn(List.of(tag));
-            assertEquals(new ResponseData<>(List.of(tag)),
-                    tagController.getAll());
-        }
+    @Test
+    public void shouldThrowNotFoundExceptionIfTagsWereNotFoundOnGetAllTest()
+            throws NotFoundException {
+        doThrow(NotFoundException.class)
+                .when(tagService)
+                        .findAll();
+        assertThrows(NotFoundException.class,
+                () -> tagService.findAll());
     }
 
-    @Nested
-    class FindByIdTest {
-        @Test
-        public void shouldThrowNotFoundExceptionIfTagWasNotFoundTest()
-                throws NotFoundException {
-            doThrow(NotFoundException.class)
-                    .when(tagService)
-                            .findById(0L);
-            assertThrows(NotFoundException.class,
-                    () -> tagController.getById(0L));
-        }
+    @Test
+    public void shouldReturnResponseWithCorrectListIfNoExceptionWasThrownOnGetAllTest()
+            throws NotFoundException {
+        TagDTO tagDTO =
+                ControllerTestDataFactory.createTagDTO();
 
-        @Test
-        public void shouldReturnResponseWithCorrectTagIfNoExceptionWasThrownTest()
-                throws NotFoundException {
-            when(tagService.findById(0L))
-                    .thenReturn(tag);
-            assertEquals(new ResponseData<>(tag),
-                    tagController.getById(0L));
-        }
+        when(tagService.findAll())
+                .thenReturn(List.of(tagDTO));
+        assertEquals(new ResponseData<>(List.of(tagDTO)),
+                tagController.getAll());
     }
 
-    @Nested
-    class CreateTest {
-        @BeforeEach
-        public void setUp() {
-            bindingResult = mock(BindingResult.class);
-        }
-
-        @Test
-        public void shouldThrowInvalidRequestBodyExceptionIfFieldErrorsArePresentTest() {
-            when(bindingResult.hasErrors())
-                    .thenReturn(true);
-            assertThrows(InvalidRequestBodyException.class,
-                    () -> tagController.create(tag, bindingResult));
-        }
-        @Test
-        public void shouldThrowModificationExceptionIfExceptionWasThrownTest()
-                throws ModificationException {
-            when(bindingResult.hasErrors())
-                    .thenReturn(false);
-            doThrow(ModificationException.class)
-                    .when(tagService)
-                            .create(tag);
-            assertThrows(ModificationException.class,
-                    () -> tagController.create(tag, bindingResult));
-        }
-
-        @Test
-        public void shouldReturnResponseWithCorrectStatusIfNoExceptionWasThrownTest()
-                throws InvalidRequestBodyException, ModificationException {
-            when(bindingResult.hasErrors())
-                    .thenReturn(false);
-            doNothing()
-                    .when(tagService)
-                            .create(tag);
-            assertEquals(HttpStatus.OK,
-                    tagController.create(tag, bindingResult).getStatus());
-        }
+    @Test
+    public void shouldThrowNotFoundExceptionIfTagWasNotFoundOnGetByIdTest()
+            throws NotFoundException {
+        doThrow(NotFoundException.class)
+                .when(tagService)
+                        .findById(0L);
+        assertThrows(NotFoundException.class,
+                () -> tagController.getById(0L));
     }
 
-    @Nested
-    class DeleteTest {
-        @Test
-        public void shouldThrowNotFoundExceptionIfTagWasNotFoundTest()
-                throws NotFoundException, ModificationException {
-            doThrow(NotFoundException.class)
-                    .when(tagService)
-                            .delete(0L);
-            assertThrows(NotFoundException.class,
-                    () -> tagController.deleteById(0L));
-        }
+    @Test
+    public void shouldReturnResponseWithCorrectTagIfNoExceptionWasThrownOnGetByIdTest()
+            throws NotFoundException {
+        TagDTO tagDTO =
+                ControllerTestDataFactory.createTagDTO();
 
-        @Test
-        public void shouldThrowModificationExceptionIfExceptionWasThrownTest()
-                throws NotFoundException, ModificationException {
-            doThrow(NotFoundException.class)
-                    .when(tagService)
-                            .delete(0L);
-            assertThrows(NotFoundException.class,
-                    () -> tagController.deleteById(0L));
-        }
+        when(tagService.findById(0L))
+                .thenReturn(tagDTO);
+        assertEquals(new ResponseData<>(tagDTO),
+                tagController.getById(0L));
+    }
 
-        @Test
-        public void shouldReturnResponseWithCorrectStatusIfNoExceptionWasThrownTest()
-                throws NotFoundException, ModificationException {
-            doNothing()
-                    .when(tagService)
-                            .delete(0L);
-            assertEquals(HttpStatus.OK,
-                    tagController.deleteById(0L).getStatus());
-        }
+
+    @Test
+    public void shouldThrowInvalidRequestBodyExceptionIfFieldErrorsArePresentOnCreateTest() {
+        TagDTO tagDTO =
+                ControllerTestDataFactory.createTagDTO();
+
+        when(bindingResult.hasErrors())
+                .thenReturn(true);
+        assertThrows(InvalidRequestBodyException.class,
+                () -> tagController.create(tagDTO, bindingResult));
+    }
+    @Test
+    public void shouldThrowModificationExceptionIfExceptionWasThrownOnCreateTest()
+            throws ModificationException {
+        TagDTO tagDTO =
+                ControllerTestDataFactory.createTagDTO();
+
+        when(bindingResult.hasErrors())
+                .thenReturn(false);
+        doThrow(ModificationException.class)
+                .when(tagService)
+                        .create(tagDTO);
+        assertThrows(ModificationException.class,
+                () -> tagController.create(tagDTO, bindingResult));
+    }
+
+    @Test
+    public void shouldReturnResponseWithCorrectStatusIfNoExceptionWasThrownOnCreateTest()
+            throws InvalidRequestBodyException, ModificationException {
+        TagDTO tagDTO =
+                ControllerTestDataFactory.createTagDTO();
+
+        when(bindingResult.hasErrors())
+                .thenReturn(false);
+        doNothing()
+                .when(tagService)
+                .create(tagDTO);
+        assertEquals(HttpStatus.OK,
+                tagController.create(tagDTO, bindingResult).getStatus());
+    }
+    @Test
+    public void shouldThrowNotFoundExceptionIfTagWasNotFoundOnDeleteTest()
+            throws NotFoundException, ModificationException {
+        doThrow(NotFoundException.class)
+                .when(tagService)
+                        .delete(0L);
+        assertThrows(NotFoundException.class,
+                () -> tagController.deleteById(0L));
+    }
+
+    @Test
+    public void shouldThrowModificationExceptionIfExceptionWasThrownOnDeleteTest()
+            throws NotFoundException, ModificationException {
+        doThrow(NotFoundException.class)
+                .when(tagService)
+                        .delete(0L);
+        assertThrows(NotFoundException.class,
+                () -> tagController.deleteById(0L));
+    }
+
+    @Test
+    public void shouldReturnResponseWithCorrectStatusIfNoExceptionWasThrownOnDeleteTest()
+            throws NotFoundException, ModificationException {
+        doNothing()
+                .when(tagService)
+                        .delete(0L);
+        assertEquals(HttpStatus.OK,
+                tagController.deleteById(0L).getStatus());
     }
 }

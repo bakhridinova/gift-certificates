@@ -16,14 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,7 +27,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/certificates")
+@RequestMapping("/api/certificates")
 public class CertificateController {
     private final CertificateService certificateService;
 
@@ -81,7 +74,7 @@ public class CertificateController {
      */
     @PostMapping(value = "/tag")
     public ResponseData<List<CertificateDTO>> getByTag(@RequestBody @Valid TagDTO tag,
-                                                        BindingResult bindingResult)
+                                                       BindingResult bindingResult)
             throws InvalidRequestBodyException, NotFoundException {
         log.info("********** processing post request...");
         RequestBodyValidator.validate(bindingResult);
@@ -145,7 +138,7 @@ public class CertificateController {
      */
     @PostMapping
     public ResponseData<Object> create(@RequestBody @Valid CertificateDTO certificate,
-                                                       BindingResult bindingResult)
+                                       BindingResult bindingResult)
             throws InvalidRequestBodyException, ModificationException {
         log.info("********** processing post request...");
         RequestBodyValidator.validate(bindingResult);
@@ -170,7 +163,7 @@ public class CertificateController {
      */
     @PatchMapping
     public ResponseData<Object> edit(@RequestBody @Valid CertificateDTO certificate,
-                                                     BindingResult bindingResult)
+                                     BindingResult bindingResult)
             throws InvalidRequestBodyException, NotFoundException, ModificationException {
         log.info("********** processing patch request...");
         RequestBodyValidator.validate(bindingResult);

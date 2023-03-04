@@ -9,7 +9,7 @@ import java.util.Set;
 @Data
 @Builder
 public class Certificate {
-    private long id;
+    private Long id;
     private String name;
     private String description;
     private Double price;

@@ -1,11 +1,14 @@
 package com.epam.esm.service.impl;
 
 import com.epam.esm.config.ServiceTestConfig;
+import com.epam.esm.dto.TagDTO;
+import com.epam.esm.entity.Tag;
 import com.epam.esm.exception.ModificationException;
 import com.epam.esm.exception.NotFoundException;
 import com.epam.esm.repository.impl.TagRepositoryImpl;
 import com.epam.esm.repository.repository.TagRepository;
 import com.epam.esm.service.TagService;
+import com.epam.esm.util.ServiceTestDataFactory;
 import com.epam.esm.util.mapper.TagMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -21,8 +24,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static com.epam.esm.util.ServiceTestEntityHolder.tag;
-import static com.epam.esm.util.ServiceTestEntityHolder.tagDTO;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -32,7 +33,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ServiceTestConfig.class})
-public class TagServiceTest {
+public class TagServiceImplTest {
     @Mock
     private TagMapper tagMapper;
     @Mock
@@ -60,6 +61,11 @@ public class TagServiceTest {
 
         @Test
         public void shouldReturnCorrectListOfTagsIfNoExceptionWasThrownTest() throws NotFoundException {
+            Tag tag =
+                    ServiceTestDataFactory.createTag();
+            TagDTO tagDTO =
+                    ServiceTestDataFactory.createTagDTO();
+
             when(tagRepository.findAll())
                     .thenReturn(List.of(tag));
             when(tagMapper.toTagDTO(tag))
@@ -82,6 +88,11 @@ public class TagServiceTest {
 
         @Test
         public void shouldReturnCorrectTagIfTagWithSuchIdWasFound() throws NotFoundException {
+            Tag tag =
+                    ServiceTestDataFactory.createTag();
+            TagDTO tagDTO =
+                    ServiceTestDataFactory.createTagDTO();
+
             when(tagRepository.findById(0L))
                     .thenReturn(Optional.of(tag));
             when(tagMapper.toTagDTO(tag))
@@ -94,7 +105,12 @@ public class TagServiceTest {
     @Nested
     class CreateTest {
         @Test
-        public void shouldThrowModificationExceptionIfDataAccessExceptionWasThrownTest(){
+        public void shouldThrowModificationExceptionIfDataAccessExceptionWasThrownTest() {
+            Tag tag =
+                    ServiceTestDataFactory.createTag();
+            TagDTO tagDTO =
+                    ServiceTestDataFactory.createTagDTO();
+
             when(tagMapper.toTag(tagDTO))
                     .thenReturn(tag);
             doThrow(new DataAccessException("") {})
@@ -106,6 +122,11 @@ public class TagServiceTest {
 
         @Test
         public void shouldNotThrowAnyExceptionIfNoExceptionWasThrownTest() {
+            Tag tag =
+                    ServiceTestDataFactory.createTag();
+            TagDTO tagDTO =
+                    ServiceTestDataFactory.createTagDTO();
+
             when(tagMapper.toTag(tagDTO))
                     .thenReturn(tag);
             when(tagRepository.insert(tag))
@@ -119,6 +140,9 @@ public class TagServiceTest {
     class DeleteTest {
         @Test
         public void shouldThrowModificationExceptionIfDataAccessExceptionWasThrownTest() {
+            Tag tag =
+                    ServiceTestDataFactory.createTag();
+
             when(tagRepository.findById(0L))
                     .thenReturn(Optional.of(tag));
             doThrow(new DataAccessException("") {})
@@ -139,6 +163,9 @@ public class TagServiceTest {
 
         @Test
         public void shouldNotThrowAnyExceptionIfNoExceptionWasThrownTest() {
+            Tag tag =
+                    ServiceTestDataFactory.createTag();
+
             when(tagRepository.findById(0L))
                     .thenReturn(Optional.of(tag));
             doNothing()

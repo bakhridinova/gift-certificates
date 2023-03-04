@@ -4,3 +4,5 @@
 /controller/build
 /repository/build
 /service/build
+/repository/src/main/resources/application.properties
+/repository/src/main/resources/application-dev.properties

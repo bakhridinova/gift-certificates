@@ -1,13 +1,17 @@
 package com.epam.esm.util.mapper;
 
 import com.epam.esm.config.ServiceTestConfig;
+import com.epam.esm.dto.filter.SearchFilterDTO;
+import com.epam.esm.dto.filter.SortFilterDTO;
+import com.epam.esm.entity.filter.search.SearchFilter;
+import com.epam.esm.entity.filter.sort.SortFilter;
+import com.epam.esm.util.ServiceTestDataFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static com.epam.esm.util.ServiceTestEntityHolder.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -23,19 +27,47 @@ class FilterMapperTest {
 
     @Test
     public void shouldMapFiltersCorrectlyTest() {
-        assertEquals(sortFilter, filterMapper.toSortFilter(sortFilterDTO));
-        assertEquals(searchFilter, filterMapper.toSearchFilter(searchFilterDTO));
+        SortFilter sortFilter =
+                ServiceTestDataFactory.createSortFilter();
+        SortFilterDTO sortFilterDTO =
+                ServiceTestDataFactory.createSortFilterDTO();
+
+        assertEquals(sortFilter,
+                filterMapper.toSortFilter(sortFilterDTO));
+
+        SearchFilter searchFilter =
+                ServiceTestDataFactory.createSearchFilter();
+        SearchFilterDTO searchFilterDTO =
+                ServiceTestDataFactory.createSearchFilterDTO();
+
+        assertEquals(searchFilter,
+                filterMapper.toSearchFilter(searchFilterDTO));
     }
 
     @Test
     public void shouldReturnNullIfNullPassedTest() {
-        assertNull(filterMapper.toSortFilter(null));
-        assertNull(filterMapper.toSearchFilter(null));
+        assertNull(filterMapper
+                .toSortFilter(null));
+        assertNull(filterMapper
+                .toSearchFilter(null));
     }
 
     @Test
     public void shouldReturnNullObjectIfNullObjectPassedTest() {
-        assertEquals(nullSortFilter, filterMapper.toSortFilter(nullSortFilterDTO));
-        assertEquals(nullSearchFilter, filterMapper.toSearchFilter(nullSearchFilterDTO));
+        SortFilter nullSortFilter =
+                ServiceTestDataFactory.createNullSortFilter();
+        SortFilterDTO nullSortFilterDTO =
+                ServiceTestDataFactory.createNullSortFilterDTO();
+
+        assertEquals(nullSortFilter,
+                filterMapper.toSortFilter(nullSortFilterDTO));
+
+        SearchFilter nullSearchFilter =
+                ServiceTestDataFactory.createNullSearchFilter();
+        SearchFilterDTO nullSearchFilterDTO =
+                ServiceTestDataFactory.createNullSearchFilterDTO();
+
+        assertEquals(nullSearchFilter,
+                filterMapper.toSearchFilter(nullSearchFilterDTO));
     }
 }

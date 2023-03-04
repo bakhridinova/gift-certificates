@@ -9,41 +9,42 @@ import lombok.experimental.UtilityClass;
 import java.time.LocalDateTime;
 
 @UtilityClass
-public class ControllerTestEntityHolder {
-    public static final TagDTO tag;
-    public static final CertificateDTO certificate;
-    public static final SortFilterDTO invalidSortFilter;
-    public static final SearchFilterDTO invalidSearchFilter;
-
+public class ControllerTestDataFactory {
     private static final LocalDateTime localDateTime = LocalDateTime.of(
             2020, 2, 20, 10, 10, 10);
 
-    static {
-        tag = TagDTO
+    public static TagDTO createTagDTO() {
+        return TagDTO
                 .builder()
                 .id(0L)
                 .name("name")
                 .build();
+    }
 
-        certificate = com.epam.esm.dto.CertificateDTO
+    public static CertificateDTO createCertificateDTO() {
+        return CertificateDTO
                 .builder()
                 .id(0L)
                 .name("name")
                 .description("description")
                 .price("0.0")
                 .duration("0")
-                .createDate(localDateTime.toString())
-                .lastUpdateDate(localDateTime.toString())
-                .tags(new TagDTO[] {tag})
+                .createDate(localDateTime)
+                .lastUpdateDate(localDateTime)
+                .tags(new TagDTO[] {createTagDTO()})
                 .build();
+    }
 
-        invalidSortFilter = SortFilterDTO
-            .builder()
-            .sortType("type")
-            .sortOrder("order")
-            .build();
+    public static SortFilterDTO createInvalidSortFilterDTO() {
+        return SortFilterDTO
+                .builder()
+                .sortType("type")
+                .sortOrder("order")
+                .build();
+    }
 
-        invalidSearchFilter = SearchFilterDTO
+    public static SearchFilterDTO createInvalidSearchFilterDTO() {
+        return SearchFilterDTO
                 .builder()
                 .searchValue("value")
                 .searchType("type")

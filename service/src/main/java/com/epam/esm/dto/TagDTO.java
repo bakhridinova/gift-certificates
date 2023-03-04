@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 public class TagDTO {
-    private long id;
+    private Long id;
 
     @NotNull(message = "name should be null")
     @NotEmpty(message = "name should not be empty")

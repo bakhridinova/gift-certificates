@@ -10,8 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 
 @Configuration
-@ComponentScan("com.epam.esm")
 @EnableWebMvc
+@ComponentScan({"com.epam.esm"})
 public class WebLayerConfig implements WebMvcConfigurer {
 
 }

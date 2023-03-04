@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static com.epam.esm.util.DataBaseInfoAndQueryHolder.TAG_TABLE_PK_COLUMN;
-import static com.epam.esm.util.DataBaseInfoAndQueryHolder.TAG_TABLE_NAME_COLUMN;
+import static com.epam.esm.util.DataBaseInfo.TAG_TABLE_PK_COLUMN;
+import static com.epam.esm.util.DataBaseInfo.TAG_TABLE_NAME_COLUMN;
 
 /**
  * class for mapping rows of tag result set into tag
@@ -21,8 +21,8 @@ public class TagRowMapper implements RowMapper<Tag> {
     public Tag mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Tag
                 .builder()
-                .id(rs.getLong(TAG_TABLE_PK_COLUMN))
-                .name(rs.getString(TAG_TABLE_NAME_COLUMN))
+                .id(rs.getLong(TAG_TABLE_PK_COLUMN.getName()))
+                .name(rs.getString(TAG_TABLE_NAME_COLUMN.getName()))
                 .build();
     }
 }

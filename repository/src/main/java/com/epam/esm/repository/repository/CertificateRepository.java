@@ -59,7 +59,7 @@ public interface CertificateRepository extends BaseRepository<Certificate> {
      * insert new certificate
      *
      * @param certificate Certificate
-     * @return Long id if certificate was inserted, otherwise null
+     * @return Long id of inserted certificate
      */
     @Override
     Long insert(Certificate certificate);

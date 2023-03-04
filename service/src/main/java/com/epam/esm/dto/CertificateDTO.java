@@ -1,17 +1,19 @@
 package com.epam.esm.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class CertificateDTO {
 
-    private long id;
+    private Long id;
 
     @NotNull(message = "name should not be null")
     @NotEmpty(message = "name should not be empty")
@@ -34,11 +36,11 @@ public class CertificateDTO {
     @Size(min = 1, max = 60, message = "duration should be between 1 and 60 characters")
     private String duration;
 
-    @Pattern(regexp = "(\\d{4}-\\d{2}-\\d{2})[A-Z]+(\\d{2}:\\d{2}:\\d{2}).([0-9+-:]+)", message = "ISO 8601 format")
-    private String createDate;
+    @JsonFormat(pattern = "yyyy-mm-ddThh:mm:ss")
+    private LocalDateTime createDate;
 
-    @Pattern(regexp = "(\\d{4}-\\d{2}-\\d{2})[A-Z]+(\\d{2}:\\d{2}:\\d{2}).([0-9+-:]+)", message = "ISO 8601 format")
-    private String lastUpdateDate;
+    @JsonFormat(pattern = "yyyy-mm-ddThh:mm:ss")
+    private LocalDateTime lastUpdateDate;
 
     @NotNull(message = "tags should not be null")
     private TagDTO[] tags;

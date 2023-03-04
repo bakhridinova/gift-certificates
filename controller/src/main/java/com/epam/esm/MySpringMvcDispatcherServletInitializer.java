@@ -1,10 +1,15 @@
-package com.epam.esm.config;
+package com.epam.esm;
 
+import com.epam.esm.config.ServiceConfig;
+import com.epam.esm.config.WebLayerConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class MySpringMvcDispatcherServletInitializer
+        extends AbstractAnnotationConfigDispatcherServletInitializer {
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[] {ServiceConfig.class};
@@ -15,6 +20,7 @@ public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationC
         return new Class[] {WebLayerConfig.class};
     }
 
+    @NonNull
     @Override
     protected String[] getServletMappings() {
         return new String[] {"/"};

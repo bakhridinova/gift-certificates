@@ -55,6 +55,9 @@ allprojects {
         // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
         implementation "org.hibernate.validator:hibernate-validator:8.0.0.Final"
 
+        // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+        implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
+
         // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
 

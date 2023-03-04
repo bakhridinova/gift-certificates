@@ -8,7 +8,6 @@ import com.epam.esm.entity.Certificate;
 import com.epam.esm.exception.ModificationException;
 import com.epam.esm.exception.NotFoundException;
 import com.epam.esm.repository.repository.CertificateRepository;
-import com.epam.esm.repository.repository.TagRepository;
 import com.epam.esm.service.CertificateService;
 import com.epam.esm.util.mapper.CertificateMapper;
 import com.epam.esm.util.mapper.FilterMapper;
@@ -20,10 +19,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
-import static com.epam.esm.util.ExceptionMessage.*;
+import static com.epam.esm.util.exception.ExceptionMessage.*;
 
 @Slf4j
 @Service
@@ -31,7 +29,6 @@ import static com.epam.esm.util.ExceptionMessage.*;
 @RequiredArgsConstructor
 public class CertificateServiceImpl implements CertificateService {
     private final CertificateRepository certificateRepository;
-    private final TagRepository tagRepository;
     private final CertificateMapper certificateMapper;
     private final FilterMapper filterMapper;
     private final TagMapper tagMapper;
@@ -102,7 +99,6 @@ public class CertificateServiceImpl implements CertificateService {
         try {
             log.info("********** creating new certificate...");
             certificate.setId(certificateRepository.insert(certificate));
-            Arrays.stream(certificatedto.getTags()).forEach(tag -> tag.setId(tagRepository.insert(tagMapper.toTag(tag))));
             certificateRepository.insertTags(certificate);
         } catch (DataAccessException ex) {
             log.error("failed to create certificate, cause {}", ex.getMessage());
@@ -118,7 +114,6 @@ public class CertificateServiceImpl implements CertificateService {
             certificateRepository.findById(id);
             Certificate certificate = certificateMapper.toCertificate(certificatedto);
             certificateRepository.update(certificate);
-            Arrays.stream(certificatedto.getTags()).forEach(tag -> tag.setId(tagRepository.insert(tagMapper.toTag(tag))));
             certificateRepository.insertTags(certificate);
         } catch (EmptyResultDataAccessException ex) {
             log.error("failed to find certificate by id {}, cause {}", id, ex.getMessage());

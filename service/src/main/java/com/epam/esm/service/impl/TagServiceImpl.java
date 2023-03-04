@@ -15,10 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.esm.util.ExceptionMessage.TAGS_NOT_FOUND;
-import static com.epam.esm.util.ExceptionMessage.TAG_CREATE_FAILED;
-import static com.epam.esm.util.ExceptionMessage.TAG_DELETE_FAILED;
-import static com.epam.esm.util.ExceptionMessage.TAG_ID_NOT_FOUND;
+import static com.epam.esm.util.exception.ExceptionMessage.*;
 
 @Slf4j
 @Service

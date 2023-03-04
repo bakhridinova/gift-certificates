@@ -14,44 +14,58 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @UtilityClass
-public class RepositoryTestEntityHolder {
-    public static final Tag tag;
-    public static final Certificate certificate;
-    public static final SortFilter sortFilter;
-    public static final SearchFilter searchFilter;
-
+public class RepositoryTestDataFactory {
     private static final LocalDateTime localDateTime = LocalDateTime.of(
             2020, 2, 20, 10, 10, 10);
 
-    static {
-        tag = Tag
+    public static Tag createTag(String name) {
+        return Tag
                 .builder()
                 .id(0L)
-                .name("name")
+                .name(name)
                 .build();
+    }
 
-        certificate = Certificate
+    public static Certificate createCertificate(String name, String description) {
+        return Certificate
                 .builder()
                 .id(0L)
-                .name("name")
-                .description("description")
+                .name(name)
+                .description(description)
                 .price(0.0)
                 .duration(0)
                 .createDate(localDateTime)
                 .lastUpdateDate(localDateTime)
-                .tags(Set.of(tag))
+                .tags(Set.of(createTag(name)))
+                .build();
+    }
+
+    public static Tag createNullTag() {
+        return Tag
+                .builder()
+                .build();
+    }
+
+    public static Certificate createNullCertificate() {
+        return Certificate
+                .builder()
+                .build();
+    }
+
+    public static SortFilter createSortFilter(SortType sortType, SortOrder sortOrder) {
+        return  SortFilter
+                .builder()
+                .sortType(sortType)
+                .sortOrder(sortOrder)
                 .build();
 
-        sortFilter = SortFilter
-                .builder()
-                .sortType(SortType.NAME)
-                .sortOrder(SortOrder.ASC)
-                .build();
+    }
 
-        searchFilter = SearchFilter
+    public static SearchFilter createSearchFilter(String searchValue, SearchType searchType) {
+        return SearchFilter
                 .builder()
-                .searchValue("name")
-                .searchType(SearchType.NAME)
+                .searchValue(searchValue)
+                .searchType(searchType)
                 .searchPlace(SearchPlace.BEGINS_WITH)
                 .build();
     }

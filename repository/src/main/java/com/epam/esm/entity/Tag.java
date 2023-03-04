@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Tag implements Comparable<Tag> {
-    private long id;
+    private Long id;
     private String name;
 
     @Override
