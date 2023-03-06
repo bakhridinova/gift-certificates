@@ -25,7 +25,7 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(InvalidRequestBodyException.class)
     public ResponseData<Object[]> handleInvalidRequestBodyException(InvalidRequestBodyException ex) {
         log.info("********** sending error message...");
-        return new ResponseData<>(ex.getViolations(), HttpStatus.BAD_REQUEST, "invalid request body");
+        return new ResponseData<>(ex.getViolations(), "invalid request body",  HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -38,7 +38,7 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(NotFoundException.class)
     public ResponseData<Object> handleNotFoundException(NotFoundException ex) {
         log.info("********** sending error message...");
-        return new ResponseData<>(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseData<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -51,6 +51,6 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(ModificationException.class)
     public ResponseData<Object> handleModificationException(ModificationException ex) {
         log.info("********** sending error message...");
-        return new ResponseData<>(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseData<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

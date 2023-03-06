@@ -42,7 +42,7 @@ public class CertificateController {
     public ResponseData<List<CertificateDTO>> getAll()
             throws NotFoundException {
         log.info("********** processing get request...");
-        return new ResponseData<>(certificateService.findAll());
+        return new ResponseData<>(certificateService.findAll(), HttpStatus.OK);
     }
 
     /**
@@ -57,7 +57,7 @@ public class CertificateController {
     public ResponseData<CertificateDTO> getById(@PathVariable long id)
             throws NotFoundException {
         log.info("********** processing get request...");
-        return new ResponseData<>(certificateService.findById(id));
+        return new ResponseData<>(certificateService.findById(id), HttpStatus.OK);
     }
 
     /**
@@ -78,7 +78,7 @@ public class CertificateController {
             throws InvalidRequestBodyException, NotFoundException {
         log.info("********** processing post request...");
         RequestBodyValidator.validate(bindingResult);
-        return new ResponseData<>(certificateService.findByTag(tag));
+        return new ResponseData<>(certificateService.findByTag(tag), HttpStatus.OK);
     }
 
     /**
@@ -99,7 +99,7 @@ public class CertificateController {
             throws InvalidRequestBodyException, NotFoundException {
         log.info("********** processing post request...");
         RequestBodyValidator.validate(bindingResult);
-        return new ResponseData<>(certificateService.findBySearchFilter(searchFilter));
+        return new ResponseData<>(certificateService.findBySearchFilter(searchFilter), HttpStatus.OK);
     }
 
     /**
@@ -121,7 +121,7 @@ public class CertificateController {
             throws InvalidRequestBodyException, NotFoundException {
         log.info("********** processing post request...");
         RequestBodyValidator.validate(bindingResult);
-        return new ResponseData<>(certificateService.findBySortFilter(sortFilter));
+        return new ResponseData<>(certificateService.findBySortFilter(sortFilter), HttpStatus.OK);
     }
 
     /**
@@ -144,7 +144,7 @@ public class CertificateController {
         RequestBodyValidator.validate(bindingResult);
         certificateService.create(certificate);
         log.info("********** certificate was successfully created...");
-        return new ResponseData<>(HttpStatus.OK, "certificate was successfully created!");
+        return new ResponseData<>("certificate was successfully created!", HttpStatus.OK);
     }
 
     /**
@@ -169,7 +169,7 @@ public class CertificateController {
         RequestBodyValidator.validate(bindingResult);
         certificateService.update(certificate);
         log.info("********** certificate was successfully updated...");
-        return new ResponseData<>(HttpStatus.OK, "certificate was successfully updated!");
+        return new ResponseData<>("certificate was successfully updated!", HttpStatus.OK);
     }
 
     /**
@@ -188,6 +188,6 @@ public class CertificateController {
         log.info("********** processing delete request...");
         certificateService.delete(id);
         log.info("********** certificate was successfully deleted...");
-        return new ResponseData<>(HttpStatus.OK, "certificate was successfully deleted!");
+        return new ResponseData<>("certificate was successfully deleted!", HttpStatus.OK);
     }
 }

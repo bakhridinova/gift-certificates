@@ -39,7 +39,7 @@ public class TagController {
     public ResponseData<List<TagDTO>> getAll()
             throws NotFoundException {
         log.info("********** processing get request...");
-        return new ResponseData<>(tagService.findAll());
+        return new ResponseData<>(tagService.findAll(), HttpStatus.OK);
     }
 
     /**
@@ -54,7 +54,7 @@ public class TagController {
     public ResponseData<TagDTO> getById(@PathVariable long id)
             throws NotFoundException {
         log.info("********** processing get request...");
-        return new ResponseData<>(tagService.findById(id));
+        return new ResponseData<>(tagService.findById(id), HttpStatus.OK);
     }
 
     /**
@@ -77,7 +77,7 @@ public class TagController {
         RequestBodyValidator.validate(bindingResult);
         tagService.create(tags);
         log.info("********** tag was successfully created...");
-        return new ResponseData<>(HttpStatus.OK, "tag was successfully created!");
+        return new ResponseData<>("tag was successfully created!", HttpStatus.OK);
     }
 
     /**
@@ -96,6 +96,6 @@ public class TagController {
         log.info("********** processing delete request...");
         tagService.delete(id);
         log.info("********** tag was successfully deleted...");
-        return new ResponseData<>(HttpStatus.OK, "tag was successfully deleted!");
+        return new ResponseData<>("tag was successfully deleted!", HttpStatus.OK);
     }
 }

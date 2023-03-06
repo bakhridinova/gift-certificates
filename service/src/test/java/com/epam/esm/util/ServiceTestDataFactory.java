@@ -86,8 +86,8 @@ public class ServiceTestDataFactory {
                 .description("description")
                 .price("0.0")
                 .duration("0")
-                .createDate(localDateTime)
-                .lastUpdateDate(localDateTime)
+                .createDate(String.valueOf(localDateTime))
+                .lastUpdateDate(String.valueOf(localDateTime))
                 .tags(new TagDTO[] {createTagDTO()})
                 .build();
     }

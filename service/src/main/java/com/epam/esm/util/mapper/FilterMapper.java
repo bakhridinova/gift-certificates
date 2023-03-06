@@ -9,13 +9,14 @@ import com.epam.esm.entity.filter.sort.SortFilter;
 import com.epam.esm.entity.filter.sort.SortOrder;
 import com.epam.esm.entity.filter.sort.SortType;
 import com.epam.esm.service.impl.CertificateServiceImpl;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 /**
  * mapper to convert filter dto into filter
  */
 
-@org.mapstruct.Mapper(componentModel = "spring", uses = CertificateServiceImpl.class)
+@Mapper(componentModel = "spring", uses = CertificateServiceImpl.class)
 public interface FilterMapper {
     @Mapping(target = "sortType", expression = "java(toSortType(sortFilterDTO.getSortType()))")
     @Mapping(target = "sortOrder", expression = "java(toSortOrder(sortFilterDTO.getSortOrder()))")

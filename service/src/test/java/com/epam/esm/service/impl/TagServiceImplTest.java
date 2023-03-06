@@ -11,7 +11,6 @@ import com.epam.esm.service.TagService;
 import com.epam.esm.util.ServiceTestDataFactory;
 import com.epam.esm.util.mapper.TagMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,131 +47,117 @@ public class TagServiceImplTest {
         tagService = new TagServiceImpl(tagRepository, tagMapper);
     }
 
-    @Nested
-    class FindAllTest {
-        @Test
-        public void shouldThrowNotFoundExceptionIfDataAccessExceptionWasThrownTest() {
-            doThrow(new DataAccessException("") {})
-                    .when(tagRepository)
-                            .findAll();
-            assertThrows(NotFoundException.class,
-                    () -> tagService.findAll());
-        }
-
-        @Test
-        public void shouldReturnCorrectListOfTagsIfNoExceptionWasThrownTest() throws NotFoundException {
-            Tag tag =
-                    ServiceTestDataFactory.createTag();
-            TagDTO tagDTO =
-                    ServiceTestDataFactory.createTagDTO();
-
-            when(tagRepository.findAll())
-                    .thenReturn(List.of(tag));
-            when(tagMapper.toTagDTO(tag))
-                    .thenReturn(tagDTO);
-            assertEquals(List.of(tagDTO),
-                    tagService.findAll());
-        }
+    @Test
+    public void shouldThrowNotFoundExceptionIfDataAccessExceptionWasThrownOnFindAllTest() {
+        doThrow(new DataAccessException("") {})
+                .when(tagRepository)
+                .findAll();
+        assertThrows(NotFoundException.class,
+                () -> tagService.findAll());
     }
 
-    @Nested
-    class FindByIdTest {
-        @Test
-        public void shouldThrowNotFoundExceptionIfEmptyResultDataAccessExceptionWasThrownTest() {
-            doThrow(EmptyResultDataAccessException.class)
-                    .when(tagRepository)
-                            .findById(0L);
-            assertThrows(NotFoundException.class,
-                    () -> tagService.findById(0L));
-        }
+    @Test
+    public void shouldReturnCorrectListOfTagsIfNoExceptionWasThrownOnFindAllTest() throws NotFoundException {
+        Tag tag =
+                ServiceTestDataFactory.createTag();
+        TagDTO tagDTO =
+                ServiceTestDataFactory.createTagDTO();
 
-        @Test
-        public void shouldReturnCorrectTagIfTagWithSuchIdWasFound() throws NotFoundException {
-            Tag tag =
-                    ServiceTestDataFactory.createTag();
-            TagDTO tagDTO =
-                    ServiceTestDataFactory.createTagDTO();
-
-            when(tagRepository.findById(0L))
-                    .thenReturn(Optional.of(tag));
-            when(tagMapper.toTagDTO(tag))
-                    .thenReturn(tagDTO);
-            assertEquals(tagDTO,
-                    tagService.findById(0L));
-        }
+        when(tagRepository.findAll())
+                .thenReturn(List.of(tag));
+        when(tagMapper.toTagDTO(tag))
+                .thenReturn(tagDTO);
+        assertEquals(List.of(tagDTO),
+                tagService.findAll());
     }
 
-    @Nested
-    class CreateTest {
-        @Test
-        public void shouldThrowModificationExceptionIfDataAccessExceptionWasThrownTest() {
-            Tag tag =
-                    ServiceTestDataFactory.createTag();
-            TagDTO tagDTO =
-                    ServiceTestDataFactory.createTagDTO();
-
-            when(tagMapper.toTag(tagDTO))
-                    .thenReturn(tag);
-            doThrow(new DataAccessException("") {})
-                    .when(tagRepository)
-                            .insert(tag);
-            assertThrows(ModificationException.class,
-                    () -> tagService.create(tagDTO));
-        }
-
-        @Test
-        public void shouldNotThrowAnyExceptionIfNoExceptionWasThrownTest() {
-            Tag tag =
-                    ServiceTestDataFactory.createTag();
-            TagDTO tagDTO =
-                    ServiceTestDataFactory.createTagDTO();
-
-            when(tagMapper.toTag(tagDTO))
-                    .thenReturn(tag);
-            when(tagRepository.insert(tag))
-                    .thenReturn(0L);
-            assertDoesNotThrow(() ->
-                    tagService.create(tagDTO));
-        }
+    @Test
+    public void shouldThrowNotFoundExceptionIfEmptyResultDataAccessExceptionWasThrownOnFindByIdTest() {
+        doThrow(EmptyResultDataAccessException.class)
+                .when(tagRepository)
+                        .findById(0L);
+        assertThrows(NotFoundException.class,
+                () -> tagService.findById(0L));
     }
 
-    @Nested
-    class DeleteTest {
-        @Test
-        public void shouldThrowModificationExceptionIfDataAccessExceptionWasThrownTest() {
-            Tag tag =
-                    ServiceTestDataFactory.createTag();
+    @Test
+    public void shouldReturnCorrectTagIfTagWithSuchIdWasOnFindByIdFound() throws NotFoundException {
+        Tag tag =
+                ServiceTestDataFactory.createTag();
+        TagDTO tagDTO =
+                ServiceTestDataFactory.createTagDTO();
 
-            when(tagRepository.findById(0L))
-                    .thenReturn(Optional.of(tag));
-            doThrow(new DataAccessException("") {})
-                    .when(tagRepository)
-                            .delete(0L);
-            assertThrows(ModificationException.class,
-                    () -> tagService.delete(0L));
-        }
+        when(tagRepository.findById(0L))
+                .thenReturn(Optional.of(tag));
+        when(tagMapper.toTagDTO(tag))
+                .thenReturn(tagDTO);
+        assertEquals(tagDTO,
+                tagService.findById(0L));
+    }
 
-        @Test
-        public void shouldThrowNotFoundExceptionIfEmptyResultDataAccessExceptionWasThrownTest() {
-            doThrow(EmptyResultDataAccessException.class)
-                    .when(tagRepository)
-                            .findById(0L);
-            assertThrows(NotFoundException.class,
-                    () -> tagService.delete(0L));
-        }
+    @Test
+    public void shouldThrowModificationExceptionIfDataAccessExceptionWasThrownOnCreateTest() {
+        Tag tag =
+                ServiceTestDataFactory.createTag();
+        TagDTO tagDTO =
+                ServiceTestDataFactory.createTagDTO();
 
-        @Test
-        public void shouldNotThrowAnyExceptionIfNoExceptionWasThrownTest() {
-            Tag tag =
-                    ServiceTestDataFactory.createTag();
+        when(tagMapper.toTag(tagDTO))
+                .thenReturn(tag);
+        doThrow(new DataAccessException("") {})
+                .when(tagRepository)
+                        .insert(tag);
+        assertThrows(ModificationException.class,
+                () -> tagService.create(tagDTO));
+    }
 
-            when(tagRepository.findById(0L))
-                    .thenReturn(Optional.of(tag));
-            doNothing()
-                    .when(tagRepository)
-                            .delete(0L);
-            assertDoesNotThrow(() ->
-                    tagService.delete(0L));
-        }
+    @Test
+    public void shouldNotThrowAnyExceptionIfNoExceptionWasThrownOnCreateTest() {
+        Tag tag =
+                ServiceTestDataFactory.createTag();
+        TagDTO tagDTO =
+                ServiceTestDataFactory.createTagDTO();
+
+        when(tagMapper.toTag(tagDTO))
+                .thenReturn(tag);
+        when(tagRepository.insert(tag))
+                .thenReturn(0L);
+        assertDoesNotThrow(() ->
+                tagService.create(tagDTO));
+    }
+
+    @Test
+    public void shouldThrowModificationExceptionIfDataAccessExceptionWasThrownOnDeleteTest() {
+        Tag tag =
+                ServiceTestDataFactory.createTag();
+
+        when(tagRepository.findById(0L))
+                .thenReturn(Optional.of(tag));
+        doThrow(new DataAccessException("") {})
+                .when(tagRepository)
+                        .delete(0L);
+        assertThrows(ModificationException.class,
+                () -> tagService.delete(0L));
+    }
+
+    @Test
+    public void shouldThrowNotFoundExceptionIfEmptyResultDataAccessExceptionWasThrownOnDeleteTest() {
+        doThrow(EmptyResultDataAccessException.class)
+                .when(tagRepository)
+                        .findById(0L);
+        assertThrows(NotFoundException.class,
+                () -> tagService.delete(0L));
+    }
+    @Test
+    public void shouldNotThrowAnyExceptionIfNoExceptionWasThrownOnDeleteTest() {
+        Tag tag = ServiceTestDataFactory.createTag();
+
+        when(tagRepository.findById(0L))
+                .thenReturn(Optional.of(tag));
+        doNothing()
+                .when(tagRepository)
+                        .delete(0L);
+        assertDoesNotThrow(() ->
+                tagService.delete(0L));
     }
 }

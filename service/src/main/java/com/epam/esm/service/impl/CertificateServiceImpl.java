@@ -116,7 +116,7 @@ public class CertificateServiceImpl implements CertificateService {
             certificateRepository.update(certificate);
             certificateRepository.insertTags(certificate);
         } catch (EmptyResultDataAccessException ex) {
-            log.error("failed to find certificate by id {}, cause {}", id, ex.getMessage());
+            log.error("failed to find certificate or tag by id {}, cause {}", id, ex.getMessage());
             throw new NotFoundException(CERTIFICATE_ID_NOT_FOUND, id);
         } catch (DataAccessException ex) {
             log.error("failed to update certificate with id {}, cause {}", id, ex.getMessage());

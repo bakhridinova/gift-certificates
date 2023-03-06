@@ -19,33 +19,34 @@ public class ResponseData<T> {
      * used for handling InvalidRequestBodyException
      *
      * @param content T response body
-     * @param status HttpStatus response status
      * @param message String response message
+     * @param status HttpStatus response status
      */
-    public ResponseData(T content, HttpStatus status, String message) {
+    public ResponseData(T content, String message, HttpStatus status) {
         this.content = content;
-        this.status = status;
         this.message = message;
+        this.status = status;
     }
 
     /**
      * used for responses with no content
      *
-     * @param status HttpStatus response status
      * @param message String response message
+     * @param status HttpStatus response status
      */
-    public ResponseData(HttpStatus status, String message) {
-        this.content = null;
-        this.status = status;
+    public ResponseData(String message, HttpStatus status) {
         this.message = message;
+        this.status = status;
     }
 
     /**
      * used for responses with no message
      *
      * @param content T response body
+     * @param status HttpStatus response status
      */
-    public ResponseData(T content) {
+    public ResponseData(T content, HttpStatus status) {
         this.content = content;
+        this.status = status;
     }
 }

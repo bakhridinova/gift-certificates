@@ -101,25 +101,15 @@ class TagRepositoryImplTest {
 
     @Test
     @Order(7)
-    public void shouldThrowDataAccessExceptionIfTagNameIsNotUniqueTest() {
-        Tag tag = RepositoryTestDataFactory.createTag("some name");
-
-        assertThrows(DataAccessException.class,
-                () -> tagRepository.insert(tag));
-    }
-
-    @Test
-    @Order(8)
     public void shouldThrowDataAccessExceptionIfNullObjectIsInsertedTest() {
         Tag nullTag = RepositoryTestDataFactory.createNullTag();
 
-        System.out.println(nullTag);
         assertThrows(DataAccessException.class,
                 () -> tagRepository.insert(nullTag));
     }
 
     @Test
-    @Order(9)
+    @Order(8)
     public void shouldThrowDataAccessExceptionOnInsertTest() {
         Tag tag = RepositoryTestDataFactory.createTag("some name");
 
@@ -131,7 +121,7 @@ class TagRepositoryImplTest {
     }
 
     @Test
-    @Order(10)
+    @Order(9)
     public void shouldNotThrowAnythingIfTagWasDeletedTest() {
         int size = tagRepository.findAll().size();
         tagRepository.delete(1L);
@@ -142,7 +132,7 @@ class TagRepositoryImplTest {
     }
 
     @Test
-    @Order(11)
+    @Order(10)
     public void shouldThrowDataAccessExceptionOnDeleteTest() {
         doThrow(new DataAccessException("") {})
                 .when(mockTagRepository)

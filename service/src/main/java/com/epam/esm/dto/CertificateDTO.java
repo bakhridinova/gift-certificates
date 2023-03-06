@@ -1,18 +1,15 @@
 package com.epam.esm.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 public class CertificateDTO {
-
     private Long id;
 
     @NotNull(message = "name should not be null")
@@ -27,20 +24,19 @@ public class CertificateDTO {
 
     @NotNull(message = "price should not be null")
     @NotEmpty(message = "price should not be empty")
-    @Size(min = 2, max = 20, message = "price must be between 2 and 20 characters")
+    @Pattern(regexp = "^([1-9]|[12][0-9]|30)\\.[0-9]$", message = "price must be between 1.0 and 30.0")
     private String price;
-
 
     @NotNull(message = "duration should not be null")
     @NotEmpty(message = "duration should not be empty")
-    @Size(min = 1, max = 60, message = "duration should be between 1 and 60 characters")
+    @Pattern(regexp = "([1-9]|[1-5][0-9]|60)", message = "duration must be between 1 and 60")
     private String duration;
 
-    @JsonFormat(pattern = "yyyy-mm-ddThh:mm:ss")
-    private LocalDateTime createDate;
+    @Pattern(regexp = "(\\d{4}-\\d{2}-\\d{2})[A-Z]+(\\d{2}:\\d{2}:\\d{2}).([0-9+-:]+)", message = "date must be in ISO format")
+    private String createDate;
 
-    @JsonFormat(pattern = "yyyy-mm-ddThh:mm:ss")
-    private LocalDateTime lastUpdateDate;
+    @Pattern(regexp = "(\\d{4}-\\d{2}-\\d{2})[A-Z]+(\\d{2}:\\d{2}:\\d{2}).([0-9+-:]+)", message = "date must be in ISO format")
+    private String lastUpdateDate;
 
     @NotNull(message = "tags should not be null")
     private TagDTO[] tags;

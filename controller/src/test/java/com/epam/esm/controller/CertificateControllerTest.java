@@ -65,7 +65,7 @@ public class CertificateControllerTest {
 
         when(certificateService.findAll())
                 .thenReturn(List.of(certificateDTO));
-        assertEquals(new ResponseData<>(List.of(certificateDTO)),
+        assertEquals(new ResponseData<>(List.of(certificateDTO), HttpStatus.OK),
                 certificateController.getAll());
     }
 
@@ -86,7 +86,7 @@ public class CertificateControllerTest {
 
         when(certificateService.findById(0L))
                 .thenReturn(certificateDTO);
-        assertEquals(new ResponseData<>(certificateDTO),
+        assertEquals(new ResponseData<>(certificateDTO, HttpStatus.OK),
                 certificateController.getById(0L));
     }
 
@@ -128,7 +128,7 @@ public class CertificateControllerTest {
                 .thenReturn(false);
         when(certificateService.findByTag(tagDTO))
                 .thenReturn(List.of(certificateDTO));
-        assertEquals(new ResponseData<>(List.of(certificateDTO)),
+        assertEquals(new ResponseData<>(List.of(certificateDTO), HttpStatus.OK),
                 certificateController.getByTag(tagDTO, bindingResult));
     }
 
@@ -170,7 +170,7 @@ public class CertificateControllerTest {
                 .thenReturn(false);
         when(certificateService.findBySearchFilter(invalidSearchFilterDTO))
                 .thenReturn(List.of(certificateDTO));
-        assertEquals(new ResponseData<>(List.of(certificateDTO)),
+        assertEquals(new ResponseData<>(List.of(certificateDTO), HttpStatus.OK),
                 certificateController.getBySearchFilter(invalidSearchFilterDTO, bindingResult));
     }
 
@@ -211,7 +211,7 @@ public class CertificateControllerTest {
                 .thenReturn(false);
         when(certificateService.findBySortFilter(invalidSortFilterDTO))
                 .thenReturn(List.of(certificateDTO));
-        assertEquals(new ResponseData<>(List.of(certificateDTO)),
+        assertEquals(new ResponseData<>(List.of(certificateDTO), HttpStatus.OK),
                 certificateController.getBySortFilter(invalidSortFilterDTO, bindingResult));
     }
 

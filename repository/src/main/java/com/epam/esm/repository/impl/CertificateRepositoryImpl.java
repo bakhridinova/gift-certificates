@@ -105,9 +105,11 @@ public class CertificateRepositoryImpl implements CertificateRepository {
     @Override
     public void insertTags(Certificate certificate) {
         log.info("********** adding new rows into tag table...");
-        certificate.getTags().forEach(tag ->
-                tag.setId(jdbcTemplate.queryForObject(
-                        INSERT_TAG.getQuery(), Long.class, tag.getName())));
+        for (Tag tag1 : certificate.getTags()) {
+            Long id = jdbcTemplate.queryForObject(
+                    INSERT_TAG.getQuery(), Long.class, tag1.getName());
+            tag1.setId(id);
+        }
 
         log.info("********** adding new rows into certificate_tag table...");
         certificate.getTags().forEach(tag ->

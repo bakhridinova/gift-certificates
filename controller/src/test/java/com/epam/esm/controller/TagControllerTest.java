@@ -62,7 +62,7 @@ class TagControllerTest {
 
         when(tagService.findAll())
                 .thenReturn(List.of(tagDTO));
-        assertEquals(new ResponseData<>(List.of(tagDTO)),
+        assertEquals(new ResponseData<>(List.of(tagDTO), HttpStatus.OK),
                 tagController.getAll());
     }
 
@@ -84,7 +84,7 @@ class TagControllerTest {
 
         when(tagService.findById(0L))
                 .thenReturn(tagDTO);
-        assertEquals(new ResponseData<>(tagDTO),
+        assertEquals(new ResponseData<>(tagDTO, HttpStatus.OK),
                 tagController.getById(0L));
     }
 

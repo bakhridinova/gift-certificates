@@ -1,7 +1,5 @@
-package com.epam.esm;
+package com.epam.esm.config;
 
-import com.epam.esm.config.ServiceConfig;
-import com.epam.esm.config.WebLayerConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import org.springframework.lang.NonNull;
